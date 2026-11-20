@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BBEngine\BBEngine.Input\BBEngine.Input.csproj" />
+    <ProjectReference Include="..\..\..\BBEngine\BBEngine.Level\BBEngine.Level.csproj" />
+    <ProjectReference Include="..\..\..\BBEngine\BBEngine.Math\BBEngine.Math.csproj" />
+  </ItemGroup>
+
+</Project>

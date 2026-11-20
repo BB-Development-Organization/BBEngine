@@ -1,0 +1,84 @@
+﻿<Application x:Class="BBEngine.Editor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BBEngine.Editor"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="4" BorderThickness="0">
+                            <Border.Resources>
+                                <LinearGradientBrush x:Key="bgBrush" StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#FF005F90" Offset="0.0"/>
+                                    <GradientStop Color="#FF00507B" Offset="1.0"/>
+                                </LinearGradientBrush>
+                                <SolidColorBrush x:Key="fgBrush" Color="#FFFFFFFF" />
+                            </Border.Resources>
+                            <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition GeneratedDuration="0:0:0.05"/>
+                                        </VisualStateGroup.Transitions>
+
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard/>
+                                        </VisualState>
+
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                    To="#FF0079BB"
+                                                    Duration="0:0:0.10"/>
+
+                                                <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                    To="#FF0087D0"
+                                                    Duration="0:0:0.10"/>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                                    To="#FF004971"
+                                                    Duration="0:0:0.10"/>
+
+                                                <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                    To="#FF005A8A"
+                                                    Duration="0:0:0.10"/>
+                                            </Storyboard>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard/>
+                                        </VisualState>
+
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            <Border.Background>
+                                <StaticResource ResourceKey="bgBrush"/>
+                            </Border.Background>
+                            <ContentPresenter x:Name="contentPresenter" 
+              HorizontalAlignment="Center" VerticalAlignment="Center" 
+              Content="{TemplateBinding Content}" 
+              ContentTemplate="{TemplateBinding ContentTemplate}" 
+              RecognizesAccessKey="True" 
+              TextElement.Foreground="{StaticResource fgBrush}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

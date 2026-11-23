@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BBEngine\BBEngine.Input\BBEngine.Input.csproj" />
-    <ProjectReference Include="..\..\..\BBEngine\BBEngine.Level\BBEngine.Level.csproj" />
-    <ProjectReference Include="..\..\..\BBEngine\BBEngine.Math\BBEngine.Math.csproj" />
+    <ProjectReference Include="..\BBEngine.Input\BBEngine.Input.csproj" />
+    <ProjectReference Include="..\BBEngine.Level\BBEngine.Level.csproj" />
+    <ProjectReference Include="..\BBEngine.Math\BBEngine.Math.csproj" />
   </ItemGroup>
 
 </Project>

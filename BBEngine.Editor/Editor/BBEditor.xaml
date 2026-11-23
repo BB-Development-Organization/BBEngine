@@ -1,0 +1,54 @@
+﻿<Window x:Class="BBEngine.Editor.Editor.BBEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BBEngine.Editor.Editor"
+        mc:Ignorable="d"
+        Title="BB Engine - Editor" Height="1080" Width="1920">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Menu splittor -->
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="1039"/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Project">
+                <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <Separator/>
+                <MenuItem Header="Build"/>
+                <Separator/>
+                <MenuItem Header="Quit To Launcher" Click="QuitToLauncher"/>
+                <MenuItem Header="Quit Application" Click="QuitApp"/>
+            </MenuItem>
+            <MenuItem Header="Resource">
+                <MenuItem Header="New">
+                    <MenuItem Header="Image"/>
+                    <MenuItem Header="Audio"/>
+                </MenuItem>
+                <MenuItem Header="Cut"/>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste" IsEnabled="False"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Main ui containers -->
+        <Grid Grid.Row="1">
+            <!-- Custom ui splittors -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="338*"/>
+                <ColumnDefinition Width="329*"/>
+                <ColumnDefinition Width="632*"/>
+                <ColumnDefinition Width="322*"/>
+                <ColumnDefinition Width="299*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="746*"/>
+                <RowDefinition Height="293*"/>
+            </Grid.RowDefinitions>
+
+        </Grid>
+    </Grid>
+</Window>

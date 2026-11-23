@@ -1,4 +1,6 @@
-﻿using BBEngine.Editor.Proj;
+﻿using BBEngine.Editor.Editor;
+using BBEngine.Editor.Proj;
+using BBEngine.Level.Serialization;
 using Microsoft.Win32;
 using System.Windows;
 
@@ -27,6 +29,10 @@ namespace BBEngine.Editor
             else return;
 
             proj.ProjectVersion = App._Version;
+
+            // Open Editor and close self
+            new BBEditor(proj).Show();
+            Close();
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -34,7 +40,22 @@ namespace BBEngine.Editor
             OpenFileDialog ofd = new();
             if (ofd.ShowDialog() == true)
             {
-
+                try
+                {
+                    Project p = serializer.from_file<Project>(ofd.FileName);
+                    if (p != null)
+                    {
+                        // Open Editor
+                        new BBEditor(p).Show();
+                        Close();
+                    }
+                    else
+                        MessageBox.Show("Project file is Invalid!", "Unable to load", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error when loading project\n\n{ex.Message}", "Unable to load", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

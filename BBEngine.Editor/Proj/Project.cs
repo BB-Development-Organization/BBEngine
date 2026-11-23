@@ -1,4 +1,5 @@
-﻿using BBEngine.Level.Serialization;
+﻿using BBEngine.Editor.Editor;
+using BBEngine.Level.Serialization;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
@@ -48,7 +49,6 @@ namespace BBEngine.Editor.Proj
 
         [DataMember]
         public string AssemblyPath { get; set; } = ".Asb";
-
 
         public Project(string filePath)
         {
@@ -139,10 +139,57 @@ namespace BBEngine.Editor.Proj
             }
 
             ProjectConfig cfg = new();
+            ResourcesLayer resLayer = new();
 
             serializer.to_file(this, ProjectFilePath);
             serializer.to_file(cfg, Path.Combine(ConfigDir.FullName, "project config.cfg"));
+            serializer.to_file(resLayer, Path.Combine(ResourcesDir.FullName, "res layer.bbrl"));
         }
+
+        public void BuilProjectAssembly()
+        {
+            var path = Path.Combine(AssemblyPath, "GameObjects", "bin", "debug", App._Settings.DotnetVersion);
+            DirectoryInfo dllsDir = new(path);
+            foreach (var dll in dllsDir.GetFiles())
+                dll.CopyTo(Path.Combine(EngineDir.FullName, dll.Name));
+        }
+
+        public void PackProject()
+        {
+            // Copy core engine launcher
+            var outputDir = Path.Combine(EngineDir.FullName, "output");
+            Copyer.CopyFile(Path.Combine(EngineDir.FullName, "binary", "BBEngine.Core.exe"), Path.Combine(outputDir, $"{ProjectName}.exe"));
+
+            // apply window settings
+            var outputDatDir = Path.Combine(outputDir, "dat");
+            var cfg = serializer.from_file<ProjectConfig>(Path.Combine(ConfigDir.FullName, "project config.cfg"));
+            File.WriteAllLines(Path.Combine(outputDatDir, "window"), new string[]
+            {
+                cfg.WindowPart.Width.ToString(),
+                cfg.WindowPart.Height.ToString(),
+                cfg.WindowPart.Title.ToString()
+            });
+            if (cfg.WindowPart.FullScreen)
+                File.WriteAllText(Path.Combine(outputDatDir, "window"), File.ReadAllText(Path.Combine(outputDatDir, "window")) + "\nfullscreen_window(true)");
+
+            // apply startup settings
+            float ch, cs, cv;
+            cfg.StartupPart.Background.GetHSV(out ch, out cs, out cv);
+            File.WriteAllLines(Path.Combine(outputDatDir, "levels"), new string[]
+            {
+                ch.ToString(), cs.ToString(), cv.ToString(),
+                cfg.StartupPart.SplashSeconds.ToString()
+            });
+
+            // pack resources
+            foreach (var res in ResourcesDir.GetFiles())
+                res.CopyTo(Path.Combine(outputDatDir, "rss", res.Name));
+
+            foreach (var dll in EngineDir.GetFiles("*.dll"))
+                dll.CopyTo(Path.Combine(outputDatDir, "asb", dll.Name));
+        }
+
+        public void OpenEditor() => new BBEditor(this).Show();
     }
 
     public static class Copyer
